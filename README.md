@@ -5,3 +5,4 @@
 |2|**[Task2](https://github.com/iamseryy/tasks_learn_networks/tree/main/task2)**|Технология Ethernet. Протокол IP.|
 |3|**[Task3](https://github.com/iamseryy/tasks_learn_networks/tree/main/task3)**|Технология Ethernet. Протокол IP.|
 |4|**[Task4](https://github.com/iamseryy/tasks_learn_networks/tree/main/task4)**|Основы компьютерных сетей. Сетевой уровень. Протоколы маршрутизации. VLAN.|
+|5|**[Task5](https://github.com/iamseryy/tasks_learn_networks/tree/main/task5)**|Основы компьютерных сетей. Транспортный уровень. UDP и TCP.|
