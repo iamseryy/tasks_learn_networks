@@ -26,4 +26,5 @@ server.bind((HOST, PORT))
 server.listen()
 
 print(f'{datetime.now()} INFO: Server started')
-receiver.receive(server)
+#receiver.receive(server)
+receiver.handshake(server)

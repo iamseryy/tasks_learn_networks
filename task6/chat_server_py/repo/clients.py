@@ -1,4 +1,5 @@
 class Clients:
+
     def add(self, user, client):
         self._clients[user] = client
 

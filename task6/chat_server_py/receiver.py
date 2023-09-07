@@ -3,7 +3,7 @@ import sender
 
 from datetime import datetime
 
-from repo import clients
+from repo.clients import Clients
 
 
 def handle(nicknames, clients, client):
@@ -11,6 +11,7 @@ def handle(nicknames, clients, client):
         try:
             # Broadcasting Messages
             message = client.recv(1024)
+            print(f'{datetime.now()} INFO: {nicknames} message - {message}')
             sender.broadcast(clients, message)
         except:
             # Removing And Closing Clients
@@ -18,7 +19,7 @@ def handle(nicknames, clients, client):
             clients.remove(client)
             client.close()
             nickname = nicknames[index]
-            sender.broadcast(clients, '{} left!'.format(nickname).encode('utf-8'))
+            sender.broadcast(clients, f'{nicknames} left!'.format(nickname).encode('utf-8'))
             nicknames.remove(nickname)
             break
 
@@ -48,13 +49,23 @@ def receive(server):
         thread.start()
 
 def handshake(server):
+    clients = Clients()
     while True:
         client, address = server.accept()
-        print(f'{datetime.now()} INFO: Connected with {format(str(address))}')
-        client.send('To connect to the chat you need to register. What is your nickname?'.encode('utf-8'))
         user = client.recv(1024).decode('utf-8')
+
+        print(f'{datetime.now()} INFO: Connected with {format(str(address))}; user: {user}')
+
+        if clients.contains(user):
+            client.send('nickname exists'.encode('utf-8'))
+            print(f'{datetime.now()} INFO: Nickname: {user} exists, connection closed')
+            client.close()
+            continue
+
         print(f'{datetime.now()} INFO: {user} joined')
         client.send('You have joined the chat'.encode('utf-8'))
-        sender.broadcast(clients.find_all.values(), "{} joined!".format(user).encode('utf-8'))
+        sender.broadcast(clients.find_all().values(), f"{user} joined!".encode('utf-8'))
         clients.add(user, client)
 
+        thread = threading.Thread(target=handle, args=(user, clients.find_all().values(), client,))
+        thread.start()
