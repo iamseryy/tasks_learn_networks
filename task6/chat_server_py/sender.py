@@ -1,9 +1,7 @@
 
-
 def broadcast(clients, message):
     for client in clients:
-        client.send(message)
-
-# def broadcast(clients, message):
-#     for client in clients:
-#         client.send(message)
+        try:
+            client.send(message)
+        except:
+            print("Some errors!!")

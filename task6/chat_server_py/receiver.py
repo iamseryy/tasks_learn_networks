@@ -1,3 +1,4 @@
+import json
 import threading
 import sender
 
@@ -6,21 +7,22 @@ from datetime import datetime
 from repo.clients import Clients
 
 
-def handle(nicknames, clients, client):
+def handle(clients, client):
     while True:
         try:
-            # Broadcasting Messages
-            message = client.recv(1024)
-            print(f'{datetime.now()} INFO: {nicknames} message - {message}')
-            sender.broadcast(clients, message)
+            message = json.loads(client.recv(1024))
+            user = message["user"]
+            print(f'{datetime.now()} INFO: message from {message["user"]} - {message["message"]}')
+            sender.broadcast([item for item in clients if item != client], f"{user}: {message['message']}".encode('utf-8'))
+#            sender.broadcast([item for item in clients if item != client], message)
         except:
             # Removing And Closing Clients
-            index = clients.index(client)
-            clients.remove(client)
-            client.close()
-            nickname = nicknames[index]
-            sender.broadcast(clients, f'{nicknames} left!'.format(nickname).encode('utf-8'))
-            nicknames.remove(nickname)
+            # index = clients.index(client)
+            # clients.remove(client)
+            # client.close()
+            # nickname = nicknames[index]
+            # sender.broadcast(clients, f'{nicknames} left!'.format(nickname).encode('utf-8'))
+            # nicknames.remove(nickname)
             break
 
 # Receiving / Listening Function //Handshake
@@ -67,5 +69,5 @@ def handshake(server):
         sender.broadcast(clients.find_all().values(), f"{user} joined!".encode('utf-8'))
         clients.add(user, client)
 
-        thread = threading.Thread(target=handle, args=(user, clients.find_all().values(), client,))
+        thread = threading.Thread(target=handle, args=(clients.find_all().values(), client,))
         thread.start()

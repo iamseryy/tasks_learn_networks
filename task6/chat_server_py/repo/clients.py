@@ -1,5 +1,8 @@
 class Clients:
 
+    def __init__(self):
+        self._clients = {}
+
     def add(self, user, client):
         self._clients[user] = client
 
@@ -15,9 +18,9 @@ class Clients:
     def find_all(self):
         return self._clients
 
-    @staticmethod
-    def _init_dict():
-        clients = {}
-        return clients
-
-    _clients = _init_dict()
+    # @staticmethod
+    # def _init_dict():
+    #     clients = {}
+    #     return clients
+    #
+    # _clients = _init_dict()

@@ -1,3 +1,4 @@
+import json
 import socket
 import threading
 
@@ -42,8 +43,11 @@ def receive(client):
 
 def write(user, client):
     while True:
-        message = '{}: {}'.format(user, input(''))
-        client.send(message.encode('utf-8'))
+        message = input('')
+        if not message:
+            continue
+
+        client.send(json.dumps({"user": user, "message": message}).encode('utf-8'))
 
 
 # Starting Threads For Listening And Writing
