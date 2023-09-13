@@ -17,7 +17,24 @@ Office 4 - cеть 192.168.145.0/24
 
 После чего предоставить вывод show ip nat translation c Router1.
 
+## Решение:
+* скриншотs открытых страниц по HTTP и HTTPS по публичному адресу Router3 в веб-браузере клиентов Office3 (с РС1 и РС0)
+
+![](images/image1.png)
+
+![](images/image2.png)
+
+![](images/image3.png)
+
+![](images/image4.png)
+
+* вывод show ip nat translation c Router1
+
+![](images/image5.png)
+
+
 Задача 3. Связать сети Office 1 и Office 4 с помощью GRE. Предоставит трейс с Laptop0 до Server2.
+
 
 Задача 4. Доделать OpenVPN (или Wireguard) если не успели. Предоставит скриншот публичного IP до и после подключения через VPN + скриншот вывода команды ip addr.
 Учтите что в Yandex Cloud есть два нюанса:
